@@ -1,82 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and preview ZIP files online with ZipTree — upload any ZIP archive and browse its folder structure in an easy collapsible tree view. Fast, secure, and no login required!">
-    <meta name="keywords" content="ZIP explorer, file viewer, browser ZIP, file structure, ZIP viewer, ZipTree">
-    <meta name="author" content="Shahros Shahid">
-    <meta name="theme-color" content="#0d6efd">
-    <title>ZipTree - Online ZIP File Explorer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-    <!-- favicon -->
-     <link rel="icon" type="image/png" href="assets/images/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
-<link rel="shortcut icon" href="assets/images/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="ZipTree" />
-<link rel="manifest" href="assets/images/site.webmanifest" />
-
-
-
-
-   <!-- Open Graph Meta Tags (for social sharing) -->
-<meta property="og:title" content="ZipTree - Online ZIP File Explorer">
-<meta property="og:description" content="Upload and explore ZIP files online. View folder structure, preview files instantly with ZipTree — fast, secure, no login required.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://zipscope.free.nf/">
-<meta property="og:image" content="https://zipscope.free.nf/preview-image.png"> <!-- Optional: Add a real preview image -->
-
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ZipTree - Online ZIP File Explorer">
-<meta name="twitter:description" content="Preview and browse ZIP files in your browser with ease. No login, no hassle.">
-<meta name="twitter:image" content="https://zipscope.free.nf/preview-image.png"> <!-- Optional -->
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://zipscope.free.nf/" />
-
-<!-- Robots meta tag -->
-<meta name="robots" content="index, follow">
-
-<!-- Language -->
-<meta http-equiv="Content-Language" content="en">
-
-<!-- Additional SEO -->
-<meta name="copyright" content="Shahros Shahid">
-<meta name="owner" content="Shahros Shahid">
-<meta name="distribution" content="global">
-<meta name="rating" content="general">
-<meta name="revisit-after" content="7 days">
-
-
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Prism.js CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="/assets/css/styles.css" rel="stylesheet">
-    <style>
-        #copyStructure {
-            transition: all 0.3s ease;
-        }
-        #copyStructure.copied {
-            background-color: var(--bs-success) !important;
-            color: white !important;
-            border-color: var(--bs-success) !important;
-        }
-        #copyStructure.copied:hover {
-            background-color: var(--bs-success) !important;
-            color: white !important;
-        }
-        #copyStructure:active {
-            transform: scale(0.95);
-        }
-    </style>
+  <!-- Primary SEO Meta Tags -->
+  <title>ZipTree - Online ZIP File Explorer</title>
+  <meta name="description" content="Explore and preview ZIP files online with ZipTree — upload any ZIP archive and browse its folder structure in an easy collapsible tree view. Fast, secure, and no login required!" />
+  <meta name="keywords" content="ZIP explorer, file viewer, browser ZIP, file structure, ZIP viewer, ZipTree" />
+  <meta name="author" content="Shahroz Shahid" />
+  
+  <!-- Theme color for browsers -->
+  <meta name="theme-color" content="#0d6efd" />
+  
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/png" href="assets/images/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="ZipTree" />
+  <link rel="manifest" href="assets/images/site.webmanifest" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="ZipTree - Online ZIP File Explorer" />
+  <meta property="og:description" content="Upload and explore ZIP files online. View folder structure, preview files instantly with ZipTree — fast, secure, no login required." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zipscope.free.nf/" />
+  <meta property="og:image" content="https://zipscope.free.nf/preview-image.png" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ZipTree - Online ZIP File Explorer" />
+  <meta name="twitter:description" content="Preview and browse ZIP files in your browser with ease. No login, no hassle." />
+  <meta name="twitter:image" content="https://zipscope.free.nf/preview-image.png" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://zipscope.free.nf/" />
+  
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Language -->
+  <meta http-equiv="Content-Language" content="en" />
+  
+  <!-- Additional SEO Meta -->
+  <meta name="copyright" content="Shahroz Shahid" />
+  <meta name="owner" content="Shahroz Shahid" />
+  <meta name="distribution" content="global" />
+  <meta name="rating" content="general" />
+  <meta name="revisit-after" content="7 days" />
+  
+  <!-- CSS Dependencies -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  
+  <!-- Custom CSS -->
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  
+  <style>
+    #copyStructure {
+      transition: all 0.3s ease;
+    }
+    #copyStructure.copied {
+      background-color: var(--bs-success) !important;
+      color: white !important;
+      border-color: var(--bs-success) !important;
+    }
+    #copyStructure.copied:hover {
+      background-color: var(--bs-success) !important;
+      color: white !important;
+    }
+    #copyStructure:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 
 <body>
