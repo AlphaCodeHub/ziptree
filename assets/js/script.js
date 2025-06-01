@@ -174,10 +174,99 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Toast notification system
+    function createToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toastContainer') || (() => {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'fixed bottom-4 right-4 flex flex-col gap-2 z-50';
+            document.body.appendChild(container);
+            return container;
+        })();
+
+        const toast = document.createElement('div');
+        toast.className = 'px-4 py-2 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300 bg-white dark:bg-dark-200 border border-gray-200 dark:border-dark-400';
+        
+        // Create toast content
+        const content = document.createElement('div');
+        content.className = 'flex items-center';
+        
+        const icon = document.createElement('i');
+        const text = document.createElement('span');
+        text.className = 'text-sm font-medium text-gray-700 dark:text-gray-200';
+        text.textContent = message;
+        
+        // Set icon and colors based on type
+        let iconClass, textColor;
+        switch(type) {
+            case 'success':
+                iconClass = 'fa-check-circle';
+                textColor = 'text-green-500';
+                break;
+            case 'error':
+                iconClass = 'fa-exclamation-circle';
+                textColor = 'text-red-500';
+                break;
+            case 'warning':
+                iconClass = 'fa-exclamation-triangle';
+                textColor = 'text-yellow-500';
+                break;
+            case 'info':
+                iconClass = 'fa-info-circle';
+                textColor = 'text-blue-500';
+                break;
+            default:
+                iconClass = 'fa-info-circle';
+                textColor = 'text-blue-500';
+        }
+        
+        icon.className = `fas ${iconClass} mr-2 ${textColor}`;
+        content.appendChild(icon);
+        content.appendChild(text);
+        toast.appendChild(content);
+        
+        // Add to container
+        toastContainer.appendChild(toast);
+        
+        // Force a reflow to ensure the animation works
+        toast.offsetHeight;
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+        });
+        
+        // Remove after delay
+        const delay = type === 'warning' ? 5000 : 3000;
+        setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            setTimeout(() => {
+                toast.remove();
+                // Remove container if empty
+                if (toastContainer.children.length === 0) {
+                    toastContainer.remove();
+                }
+            }, 300);
+        }, delay);
+    }
+
+    // Make createToast globally accessible
+    window.createToast = createToast;
+
+    // Replace old showToast with new createToast
+    function showToast(message, type = 'success') {
+        createToast(message, type);
+    }
+
     function processZipFile(file) {
         // Show progress
         uploadProgress.classList.remove('hidden');
         progressBar.style.width = '0%';
+        
+        // Show initial toast
+        createToast('Starting file processing...', 'info');
         
         // Read the file
         const reader = new FileReader();
@@ -190,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fileSizeMB > 100) {
                 const estimatedTime = Math.ceil(fileSizeMB / 50);
                 loadingMessage.textContent = `Processing large file (${fileSizeMB.toFixed(1)}MB). Estimated time: ${estimatedTime} seconds...`;
+                createToast(`Large file detected (${fileSizeMB.toFixed(1)}MB). Processing may take longer...`, 'warning');
             }
             
             // Reset any previous errors
@@ -354,10 +444,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Show skipped files message if any
                 if (skippedFiles.length > 0) {
-                    const skippedMessage = `Processed ${fileCount} files. ${skippedFiles.length} files were skipped.`;
-                    showToast(skippedMessage, 'warning');
+                    createToast(`Processed ${fileCount} files. ${skippedFiles.length} files were skipped.`, 'warning');
                 } else {
-                    showToast('File processed successfully!', 'success');
+                    createToast('File processed successfully!', 'success');
                 }
                 
                 // Store current zip
@@ -431,8 +520,10 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage = 'An error occurred while processing the file. Please try again with a different ZIP file.';
         }
         
+        // Show error toast
+        createToast(errorMessage, errorType);
+        
         // Reset UI state
-        showToast(errorMessage, errorType);
         uploadProgress.classList.add('hidden');
         fileInput.value = '';
         
@@ -705,148 +796,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // Developer Tools functionality
     const devToolsBtn = document.getElementById('devToolsBtn');
     const exportJsonBtn = document.getElementById('exportJsonBtn');
-    const copyJsonBtn = document.getElementById('copyJsonBtn');
-    const toast = document.getElementById('toast');
-    const toastText = toast.querySelector('span');
+    const copyStructureBtn = document.getElementById('copyStructureBtn');
 
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toast');
-        const toastText = toast.querySelector('span');
-        const icon = toast.querySelector('i');
-        
-        // Update message
-        toastText.textContent = message;
-        
-        // Update icon and colors based on type
-        let iconClass, bgColor, textColor;
-        
-        switch(type) {
-            case 'success':
-                iconClass = 'fa-check-circle';
-                bgColor = 'bg-green-500';
-                textColor = 'text-green-500';
-                break;
-            case 'error':
-                iconClass = 'fa-exclamation-circle';
-                bgColor = 'bg-red-500';
-                textColor = 'text-red-500';
-                break;
-            case 'warning':
-                iconClass = 'fa-exclamation-triangle';
-                bgColor = 'bg-yellow-500';
-                textColor = 'text-yellow-500';
-                break;
-            case 'info':
-                iconClass = 'fa-info-circle';
-                bgColor = 'bg-blue-500';
-                textColor = 'text-blue-500';
-                break;
-            default:
-                iconClass = 'fa-info-circle';
-                bgColor = 'bg-blue-500';
-                textColor = 'text-blue-500';
-        }
-        
-        // Update toast appearance
-        icon.className = `fas ${iconClass} mr-2 ${textColor}`;
-        toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg transform translate-y-0 opacity-100 transition-all duration-300 ${bgColor} bg-opacity-10`;
-        
-        // Show toast
-        toast.classList.remove('translate-y-full', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-        
-        // Hide toast after delay
-        const delay = type === 'warning' ? 5000 : 3000;
-        setTimeout(() => {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('translate-y-full', 'opacity-0');
-        }, delay);
-    }
+    function generateTreeStructure(tree, prefix = '', isLast = true) {
+        let output = '';
+        const entries = Object.entries(tree).sort(([aName, aContent], [bName, bContent]) => {
+            const aIsFolder = aContent && aContent.type === 'folder';
+            const bIsFolder = bContent && bContent.type === 'folder';
+            if (aIsFolder && !bIsFolder) return -1;
+            if (!aIsFolder && bIsFolder) return 1;
+            return aName.localeCompare(bName);
+        });
 
-    function getTreeStructure(tree) {
-        const structure = {};
-        
-        for (const [name, content] of Object.entries(tree)) {
-            if (content instanceof JSZip.JSZipObject) {
-                structure[name] = {
-                    type: 'file',
-                    size: content._data.uncompressedSize,
-                    lastModified: content.date
-                };
-            } else {
-                structure[name] = {
-                    type: 'directory',
-                    children: getTreeStructure(content)
-                };
+        entries.forEach(([name, content], index) => {
+            const isLastEntry = index === entries.length - 1;
+            const isFolder = content && content.type === 'folder';
+            
+            // Add the current entry
+            output += prefix + (isLast ? '└── ' : '├── ') + name + '\n';
+            
+            // If it's a folder, recursively add its contents
+            if (isFolder && content.children) {
+                const newPrefix = prefix + (isLast ? '    ' : '│   ');
+                output += generateTreeStructure(content.children, newPrefix, isLastEntry);
             }
-        }
-        
-        return structure;
+        });
+
+        return output;
     }
 
-    function exportJson(zip) {
+    function copyStructure(zip) {
         try {
             const tree = {};
             zip.forEach((relativePath, zipEntry) => {
+                // Skip directories
+                if (zipEntry.dir) return;
+                
                 const parts = relativePath.split('/');
                 let current = tree;
                 
-                parts.forEach((part, index) => {
+                // Create directory structure
+                for (let i = 0; i < parts.length - 1; i++) {
+                    const part = parts[i];
                     if (!current[part]) {
-                        current[part] = index === parts.length - 1 ? zipEntry : {};
+                        current[part] = { type: 'folder', children: {} };
                     }
-                    current = current[part];
-                });
-            });
-
-            const structure = getTreeStructure(tree);
-            const jsonString = JSON.stringify(structure, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'zip-structure.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showToast('JSON file exported successfully!', 'success');
-        } catch (error) {
-            console.error('Error exporting JSON:', error);
-            showToast('Failed to export JSON file. Please try again.', 'error');
-        }
-    }
-
-    function copyJson(zip) {
-        try {
-            const tree = {};
-            zip.forEach((relativePath, zipEntry) => {
-                const parts = relativePath.split('/');
-                let current = tree;
+                    current = current[part].children;
+                }
                 
-                parts.forEach((part, index) => {
-                    if (!current[part]) {
-                        current[part] = index === parts.length - 1 ? zipEntry : {};
-                    }
-                    current = current[part];
-                });
+                // Add file
+                const fileName = parts[parts.length - 1];
+                if (fileName) {
+                    current[fileName] = { type: 'file' };
+                }
             });
 
-            const structure = getTreeStructure(tree);
-            const jsonString = JSON.stringify(structure, null, 2);
+            const structure = generateTreeStructure(tree);
             
-            navigator.clipboard.writeText(jsonString)
+            navigator.clipboard.writeText(structure)
                 .then(() => {
-                    showToast('JSON structure copied to clipboard!', 'success');
+                    createToast('File structure copied to clipboard!', 'success');
                 })
                 .catch(() => {
-                    showToast('Failed to copy JSON to clipboard. Please try again.', 'error');
+                    createToast('Failed to copy structure to clipboard. Please try again.', 'error');
                 });
         } catch (error) {
-            console.error('Error copying JSON:', error);
-            showToast('Failed to prepare JSON data. Please try again.', 'error');
+            console.error('Error copying structure:', error);
+            createToast('Failed to prepare file structure. Please try again.', 'error');
         }
     }
 
@@ -857,9 +873,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    copyJsonBtn.addEventListener('click', () => {
+    copyStructureBtn.addEventListener('click', () => {
         if (currentZip) {
-            copyJson(currentZip);
+            copyStructure(currentZip);
         }
     });
 
