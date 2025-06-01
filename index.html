@@ -1,321 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    <title>ZipTree - ZIP File Explorer</title>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ZipTree – Explore ZIP File Contents in a Tree View</title>
+
     <!-- Primary Meta Tags -->
-    <meta name="title" content="ZipTree - ZIP File Explorer">
-    <meta name="description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
-    <meta name="keywords" content="zip explorer, file structure, zip viewer, archive explorer, file management, zip tool">
-    <meta name="author" content="ZipTree">
-    <meta name="robots" content="index, follow">
-    
+    <meta name="title" content="ZipTree - ZIP File Explorer" />
+    <meta
+      name="description"
+      content="ZipTree is a free online tool to visualize and navigate ZIP file contents in an interactive tree structure. Upload and explore your ZIP archives effortlessly."
+    />
+
+    <meta
+      name="keywords"
+      content="zip explorer, file structure, zip viewer, archive explorer, file management, zip tool"
+    />
+    <meta name="author" content="ZipTree" />
+    <meta name="robots" content="index, follow" />
+
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="website" />
     <meta property="og:url" content=https://ziptree.vercel.app/">
-    <meta property="og:title" content="ZipTree - Professional ZIP File Explorer">
-    <meta property="og:description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
+    <meta
+      property="og:title"
+      content="ZipTree - Professional ZIP File Explorer"
+    />
+    <meta
+      property="og:description"
+      content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently."
+    />
     <meta property="og:image" content=https://ziptree.vercel.app/og-image.jpg">
-    
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content=https://ziptree.vercel.app/">
-    <meta property="twitter:title" content="ZipTree - Professional ZIP File Explorer">
-    <meta property="twitter:description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
-    <meta property="twitter:image" content=https://ziptree.vercel.app/og-image.jpg">
-    
+    <meta
+      property="twitter:title"
+      content="ZipTree - Professional ZIP File Explorer"
+    />
+    <meta
+      property="twitter:description"
+      content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently."
+    />
+    <meta property="twitter:image"
+    content=https://ziptree.vercel.app/og-image.jpg">
+
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images//favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
-<link rel="shortcut icon" href="assets/images//favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/images//apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="ZipTree" />
-<link rel="manifest" href="/site.webmanifest" />
-    
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/images//favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+    <link rel="shortcut icon" href="assets/images//favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/images//apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="ZipTree" />
+    <link rel="manifest" href="/site.webmanifest" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        dark: {
-                            100: '#121212',
-                            200: '#1E1E1E',
-                            300: '#2D2D2D',
-                            400: '#3D3D3D',
-                            500: '#4D4D4D',
-                            600: '#5D5D5D',
-                            700: '#6D6D6D',
-                            800: '#7D7D7D',
-                            900: '#8D8D8D',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              dark: {
+                100: "#121212",
+                200: "#1E1E1E",
+                300: "#2D2D2D",
+                400: "#3D3D3D",
+                500: "#4D4D4D",
+                600: "#5D5D5D",
+                700: "#6D6D6D",
+                800: "#7D7D7D",
+                900: "#8D8D8D",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            animation: {
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            },
+          },
+        },
+      };
     </script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    
-</head>
-<body class="text-gray-800 font-sans min-h-screen flex flex-col dark:bg-dark-100 dark:text-white transition-colors duration-200">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body
+    class="text-gray-800 font-sans min-h-screen flex flex-col dark:bg-dark-100 dark:text-white transition-colors duration-200"
+  >
     <!-- Welcome Popup -->
     <div id="welcomePopup" class="welcome-popup">
-        <div class="welcome-popup-content">
-            <button class="welcome-popup-close" onclick="closeWelcomePopup()">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400">Welcome to ZipTree!</h2>
-            <div class="space-y-4">
-                <p class="text-gray-600 dark:text-gray-300">This tool helps you explore the contents of ZIP files in an interactive tree view.</p>
-                <div class="bg-gray-50 dark:bg-dark-100 p-4 rounded-lg">
-                    <h3 class="font-semibold mb-2 text-gray-700 dark:text-gray-200">Key Features:</h3>
-                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-                        <li>View ZIP file contents in a tree structure</li>
-                        <li>Expand and collapse folders</li>
-                        <li>See file sizes and types</li>
-                        <li>Export or copy file structure as JSON</li>
-                        <li>Dark mode support</li>
-                    </ul>
-                </div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Note: Only ZIP files are supported. Other file types will be rejected.</p>
-            </div>
-            <button onclick="closeWelcomePopup()" class="mt-6 w-full px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-200">
-                Get Started
-            </button>
+      <div class="welcome-popup-content">
+        <button class="welcome-popup-close" onclick="closeWelcomePopup()">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+        <h2
+          class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400"
+        >
+          Welcome to ZipTree!
+        </h2>
+        <div class="space-y-4">
+          <p class="text-gray-600 dark:text-gray-300">
+            This tool helps you explore the contents of ZIP files in an
+            interactive tree view.
+          </p>
+          <div class="bg-gray-50 dark:bg-dark-100 p-4 rounded-lg">
+            <h3 class="font-semibold mb-2 text-gray-700 dark:text-gray-200">
+              Key Features:
+            </h3>
+            <ul
+              class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300"
+            >
+              <li>View ZIP file contents in a tree structure</li>
+              <li>Expand and collapse folders</li>
+              <li>See file sizes and types</li>
+              <li>Export or copy file structure as JSON</li>
+              <li>Dark mode support</li>
+            </ul>
+          </div>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Note: Only ZIP files are supported. Other file types will be
+            rejected.
+          </p>
         </div>
+        <button
+          onclick="closeWelcomePopup()"
+          class="mt-6 w-full px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-200"
+        >
+          Get Started
+        </button>
+      </div>
     </div>
 
     <div class="container mx-auto px-4 py-6 sm:p-6 md:p-8 flex-grow">
-        <header class="mb-8 md:mb-12">
-            <div class="flex justify-between items-center mb-4">
-                <div class="inline-flex items-center">
-                    <i class="fas fa-file-zipper text-primary-500 text-4xl md:text-5xl mr-3"></i>
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">ZipTree</h1>
+      <header class="mb-8 md:mb-12">
+        <div class="flex justify-between items-center mb-4">
+          <div class="inline-flex items-center">
+            <i
+              class="fas fa-file-zipper text-primary-500 text-4xl md:text-5xl mr-3"
+            ></i>
+            <h1
+              class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400"
+            >
+              ZipTree
+            </h1>
+          </div>
+          <button
+            id="darkModeToggle"
+            class="p-3 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3"
+          >
+            <i class="fas fa-moon dark:hidden text-lg"></i>
+            <i class="fas fa-sun hidden dark:block text-lg"></i>
+            <span class="text-base hidden md:inline">Toggle Theme</span>
+          </button>
+        </div>
+        <p
+          class="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+        >
+          Upload a .zip file to explore its contents in an interactive tree view
+        </p>
+      </header>
+
+      <main class="max-w-6xl mx-auto">
+        <section
+          id="dropZone"
+          class="mb-8 p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-xl border-2 border-dashed border-gray-200 dark:border-dark-400"
+        >
+          <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="w-full md:w-3/4">
+              <label
+                for="zipFile"
+                class="block mb-3 text-lg md:text-xl font-medium text-gray-700 dark:text-white"
+                >Select a .zip file or drag & drop:</label
+              >
+              <div class="relative">
+                <input
+                  type="file"
+                  id="zipFile"
+                  accept=".zip"
+                  class="block w-full text-base text-gray-500 dark:text-gray-300 file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-primary-50 dark:file:bg-dark-300 file:text-primary-700 dark:file:text-white hover:file:bg-primary-100 dark:hover:file:bg-dark-400 focus:outline-none cursor-pointer border border-gray-200 dark:border-dark-400 rounded-lg p-3"
+                />
+                <div
+                  class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 dark:text-gray-500"
+                >
+                  <i class="fas fa-cloud-arrow-up text-xl"></i>
                 </div>
-                <button id="darkModeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
-                    <i class="fas fa-moon dark:hidden text-lg"></i>
-                    <i class="fas fa-sun hidden dark:block text-lg"></i>
-                    <span class="text-base hidden md:inline">Toggle Theme</span>
-                </button>
+              </div>
+              <div
+                id="dropZoneText"
+                class="mt-3 text-base text-gray-500 dark:text-gray-400 text-center"
+              >
+                <i class="fas fa-arrow-down mr-2"></i> Drag and drop your zip
+                file here
+              </div>
+              <div class="file-type-warning">
+                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                <span
+                  >Only ZIP files are supported. Other file types will be
+                  rejected.</span
+                >
+              </div>
             </div>
-            <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Upload a .zip file to explore its contents in an interactive tree view</p>
-        </header>
+            <div class="w-full md:w-1/4 flex justify-center">
+              <div
+                class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary-50 dark:bg-dark-300 flex items-center justify-center"
+              >
+                <i
+                  class="fas fa-folder-tree text-primary-500 text-3xl md:text-4xl"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div id="uploadProgress" class="hidden mt-6">
+            <div
+              class="w-full bg-primary-200 dark:bg-dark-300 rounded-full h-3"
+            >
+              <div
+                class="bg-primary-500 h-3 rounded-full transition-all duration-300"
+                style="width: 0%"
+              ></div>
+            </div>
+            <p
+              class="text-base text-gray-600 dark:text-gray-300 mt-3 text-center"
+            >
+              Processing your file...
+            </p>
+          </div>
+        </section>
 
-        <main class="max-w-6xl mx-auto">
-            <section id="dropZone" class="mb-8 p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-xl border-2 border-dashed border-gray-200 dark:border-dark-400">
-                <div class="flex flex-col md:flex-row items-center gap-6">
-                    <div class="w-full md:w-3/4">
-                        <label for="zipFile" class="block mb-3 text-lg md:text-xl font-medium text-gray-700 dark:text-white">Select a .zip file or drag & drop:</label>
-                        <div class="relative">
-                            <input type="file" id="zipFile" accept=".zip" 
-                                class="block w-full text-base text-gray-500 dark:text-gray-300 file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 
-                                    file:text-base file:font-semibold file:bg-primary-50 dark:file:bg-dark-300 file:text-primary-700 dark:file:text-white hover:file:bg-primary-100 dark:hover:file:bg-dark-400
-                                    focus:outline-none cursor-pointer border border-gray-200 dark:border-dark-400 rounded-lg p-3">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 dark:text-gray-500">
-                                <i class="fas fa-cloud-arrow-up text-xl"></i>
-                            </div>
-                        </div>
-                        <div id="dropZoneText" class="mt-3 text-base text-gray-500 dark:text-gray-400 text-center">
-                            <i class="fas fa-arrow-down mr-2"></i> Drag and drop your zip file here
-                        </div>
-                        <div class="file-type-warning">
-                            <i class="fas fa-exclamation-triangle text-yellow-500"></i>
-                            <span>Only ZIP files are supported. Other file types will be rejected.</span>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-1/4 flex justify-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary-50 dark:bg-dark-300 flex items-center justify-center">
-                            <i class="fas fa-folder-tree text-primary-500 text-3xl md:text-4xl"></i>
-                        </div>
-                    </div>
+        <section
+          id="treeViewSection"
+          class="p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg min-h-[300px] md:min-h-[400px] transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4"
+          >
+            <div class="flex items-center">
+              <i
+                class="fas fa-sitemap text-primary-500 text-xl md:text-2xl mr-3"
+              ></i>
+              <h2
+                class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-white"
+              >
+                File Structure
+              </h2>
+            </div>
+            <div class="flex w-full md:w-auto justify-end gap-3">
+              <button
+                id="expandAllBtn"
+                class="px-4 py-2 text-sm md:text-base font-medium text-white bg-primary-500 dark:bg-primary-600 rounded-lg hover:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 dark:focus:ring-primary-500 transition-all duration-200 hidden flex items-center"
+              >
+                <i class="fas fa-expand-alt mr-2"></i> Expand All
+              </button>
+              <button
+                id="collapseAllBtn"
+                class="px-4 py-2 text-sm md:text-base font-medium text-white bg-gray-500 dark:bg-gray-600 rounded-lg hover:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 transition-all duration-200 hidden flex items-center"
+              >
+                <i class="fas fa-compress-alt mr-2"></i> Collapse All
+              </button>
+              <button
+                id="downloadBtn"
+                class="px-4 py-2 text-sm md:text-base font-medium text-white bg-green-500 dark:bg-green-600 rounded-lg hover:bg-green-600 dark:hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-500 transition-all duration-200 hidden flex items-center"
+              >
+                <i class="fas fa-download mr-2"></i> Download
+              </button>
+              <div class="relative group">
+                <button
+                  id="devToolsBtn"
+                  class="px-4 py-2 text-sm md:text-base font-medium text-white bg-purple-500 dark:bg-purple-600 rounded-lg hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:focus:ring-purple-500 transition-all duration-200 hidden flex items-center"
+                >
+                  <i class="fas fa-code mr-2"></i> Dev Tools
+                </button>
+                <div
+                  class="absolute right-0 mt-2 w-56 bg-white dark:bg-dark-200 rounded-lg shadow-lg py-2 z-10 hidden group-hover:block border border-gray-200 dark:border-dark-400"
+                >
+                  <button
+                    id="exportJsonBtn"
+                    class="w-full px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-300 flex items-center"
+                  >
+                    <i
+                      class="fas fa-file-export mr-3 text-blue-500 dark:text-blue-400"
+                    ></i>
+                    Export JSON
+                  </button>
+                  <button
+                    id="copyJsonBtn"
+                    class="w-full px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-300 flex items-center"
+                  >
+                    <i
+                      class="fas fa-copy mr-3 text-green-500 dark:text-green-400"
+                    ></i>
+                    Copy JSON
+                  </button>
                 </div>
-                <div id="uploadProgress" class="hidden mt-6">
-                    <div class="w-full bg-primary-200 dark:bg-dark-300 rounded-full h-3">
-                        <div class="bg-primary-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                    <p class="text-base text-gray-600 dark:text-gray-300 mt-3 text-center">Processing your file...</p>
-                </div>
-            </section>
+              </div>
+            </div>
+          </div>
+          <div
+            id="fileTreeWrapper"
+            class="bg-gray-50 dark:bg-dark-100 p-4 md:p-6 rounded-lg border border-gray-200 dark:border-dark-400 max-h-[50vh] md:max-h-[60vh] overflow-auto"
+          >
+            <div
+              id="fileTree"
+              class="text-sm md:text-base whitespace-pre-wrap break-all font-mono"
+            >
+              <!-- Tree will be rendered here -->
+            </div>
+            <div
+              id="placeholderText"
+              class="py-16 flex flex-col items-center justify-center text-center"
+            >
+              <div
+                class="w-20 h-20 md:w-24 md:h-24 mb-6 text-gray-300 dark:text-dark-600"
+              >
+                <i class="fas fa-file-zipper text-5xl md:text-6xl"></i>
+              </div>
+              <p class="text-lg md:text-xl text-gray-500 dark:text-gray-300">
+                Upload a zip file to see its contents
+              </p>
+              <p class="text-base text-gray-400 dark:text-gray-400 mt-3">
+                Supports any standard .zip archive
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <section id="treeViewSection" class="p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg min-h-[300px] md:min-h-[400px] transition-all duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                    <div class="flex items-center">
-                        <i class="fas fa-sitemap text-primary-500 text-xl md:text-2xl mr-3"></i>
-                        <h2 class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-white">File Structure</h2>
-                    </div>
-                    <div class="flex w-full md:w-auto justify-end gap-3">
-                        <button id="expandAllBtn" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-primary-500 dark:bg-primary-600 rounded-lg hover:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 dark:focus:ring-primary-500 transition-all duration-200 hidden flex items-center">
-                            <i class="fas fa-expand-alt mr-2"></i> Expand All
-                        </button>
-                        <button id="collapseAllBtn" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-gray-500 dark:bg-gray-600 rounded-lg hover:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 transition-all duration-200 hidden flex items-center">
-                            <i class="fas fa-compress-alt mr-2"></i> Collapse All
-                        </button>
-                        <button id="downloadBtn" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-green-500 dark:bg-green-600 rounded-lg hover:bg-green-600 dark:hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-500 transition-all duration-200 hidden flex items-center">
-                            <i class="fas fa-download mr-2"></i> Download
-                        </button>
-                        <div class="relative group">
-                            <button id="devToolsBtn" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-purple-500 dark:bg-purple-600 rounded-lg hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:focus:ring-purple-500 transition-all duration-200 hidden flex items-center">
-                                <i class="fas fa-code mr-2"></i> Dev Tools
-                            </button>
-                            <div class="absolute right-0 mt-2 w-56 bg-white dark:bg-dark-200 rounded-lg shadow-lg py-2 z-10 hidden group-hover:block border border-gray-200 dark:border-dark-400">
-                                <button id="exportJsonBtn" class="w-full px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-300 flex items-center">
-                                    <i class="fas fa-file-export mr-3 text-blue-500 dark:text-blue-400"></i> Export JSON
-                                </button>
-                                <button id="copyJsonBtn" class="w-full px-4 py-3 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-300 flex items-center">
-                                    <i class="fas fa-copy mr-3 text-green-500 dark:text-green-400"></i> Copy JSON
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="fileTreeWrapper" class="bg-gray-50 dark:bg-dark-100 p-4 md:p-6 rounded-lg border border-gray-200 dark:border-dark-400 max-h-[50vh] md:max-h-[60vh] overflow-auto">
-                    <div id="fileTree" class="text-sm md:text-base whitespace-pre-wrap break-all font-mono"><!-- Tree will be rendered here --></div>
-                    <div id="placeholderText" class="py-16 flex flex-col items-center justify-center text-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 mb-6 text-gray-300 dark:text-dark-600">
-                            <i class="fas fa-file-zipper text-5xl md:text-6xl"></i>
-                        </div>
-                        <p class="text-lg md:text-xl text-gray-500 dark:text-gray-300">Upload a zip file to see its contents</p>
-                        <p class="text-base text-gray-400 dark:text-gray-400 mt-3">Supports any standard .zip archive</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="fileInfo" class="mt-8 p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg hidden">
-                <h3 class="text-xl md:text-2xl font-semibold text-gray-700 dark:text-white mb-6">File Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-4 md:p-6 bg-gray-50 dark:bg-dark-100 rounded-lg">
-                        <p class="text-base md:text-lg text-gray-600 dark:text-gray-300">Total Files</p>
-                        <p id="totalFiles" class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white">0</p>
-                    </div>
-                    <div class="p-4 md:p-6 bg-gray-50 dark:bg-dark-100 rounded-lg">
-                        <p class="text-base md:text-lg text-gray-600 dark:text-gray-300">Total Size</p>
-                        <p id="totalSize" class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white">0 KB</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <section
+          id="fileInfo"
+          class="mt-8 p-6 md:p-8 bg-white dark:bg-dark-200 rounded-xl shadow-lg hidden"
+        >
+          <h3
+            class="text-xl md:text-2xl font-semibold text-gray-700 dark:text-white mb-6"
+          >
+            File Information
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-4 md:p-6 bg-gray-50 dark:bg-dark-100 rounded-lg">
+              <p class="text-base md:text-lg text-gray-600 dark:text-gray-300">
+                Total Files
+              </p>
+              <p
+                id="totalFiles"
+                class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white"
+              >
+                0
+              </p>
+            </div>
+            <div class="p-4 md:p-6 bg-gray-50 dark:bg-dark-100 rounded-lg">
+              <p class="text-base md:text-lg text-gray-600 dark:text-gray-300">
+                Total Size
+              </p>
+              <p
+                id="totalSize"
+                class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white"
+              >
+                0 KB
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <footer class="w-full mt-8 p-6 text-center text-sm md:text-base text-gray-500 dark:text-gray-300 bg-white dark:bg-dark-200 border-t border-gray-200 dark:border-dark-400">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; <span id="year"></span> ZipTree All rights reserved.</p>
-            <a href="https://www.producthunt.com/products/ziptreetool?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ziptreetool" target="_blank">
-                <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=972287&theme=light&t=1748761381607" alt="ZipTreeTool - Zip file explorer tool | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
-            </a>
-        </div>
+    <footer
+      class="w-full mt-8 p-6 text-center text-sm md:text-base text-gray-500 dark:text-gray-300 bg-white dark:bg-dark-200 border-t border-gray-200 dark:border-dark-400"
+    >
+      <div
+        class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <p>&copy; <span id="year"></span> ZipTree All rights reserved.</p>
+        <a
+          href="https://www.producthunt.com/products/ziptreetool?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ziptreetool"
+          target="_blank"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=972287&theme=light&t=1748761381607"
+            alt="ZipTreeTool - Zip file explorer tool | Product Hunt"
+            style="width: 250px; height: 54px"
+            width="250"
+            height="54"
+          />
+        </a>
+      </div>
     </footer>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
-        <div class="flex items-center">
-            <i class="fas fa-check-circle mr-2 text-green-500"></i>
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-200"></span>
-        </div>
+    <div
+      id="toast"
+      class="fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300"
+    >
+      <div class="flex items-center">
+        <i class="fas fa-check-circle mr-2 text-green-500"></i>
+        <span
+          class="text-sm font-medium text-gray-700 dark:text-gray-200"
+        ></span>
+      </div>
     </div>
 
     <style>
-        .drag-over {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(14, 165, 233, 0.1);
-            border: 4px dashed #0ea5e9;
-            z-index: 9999;
-            display: none;
-            pointer-events: none;
-        }
-        .drag-over.active {
-            display: block;
-        }
+      .drag-over {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(14, 165, 233, 0.1);
+        border: 4px dashed #0ea5e9;
+        z-index: 9999;
+        display: none;
+        pointer-events: none;
+      }
+      .drag-over.active {
+        display: block;
+      }
     </style>
     <div class="drag-over" id="dragOverlay"></div>
     <script src="assets/js/script.js" defer></script>
     <script>
-        // Add drag and drop functionality to the entire document
-        const dragOverlay = document.getElementById('dragOverlay');
-        
-        document.addEventListener('dragenter', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dragOverlay.classList.add('active');
-        });
+      // Add drag and drop functionality to the entire document
+      const dragOverlay = document.getElementById("dragOverlay");
 
-        document.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        });
+      document.addEventListener("dragenter", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragOverlay.classList.add("active");
+      });
 
-        document.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (e.target === document.documentElement) {
-                dragOverlay.classList.remove('active');
-            }
-        });
+      document.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
 
-        document.addEventListener('drop', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dragOverlay.classList.remove('active');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const file = files[0];
-                if (file.type === 'application/zip' || file.name.endsWith('.zip')) {
-                    const input = document.getElementById('zipFile');
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    input.files = dataTransfer.files;
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                    
-                    // Show success message
-                    const toast = document.getElementById('toast');
-                    toast.querySelector('span').textContent = 'ZIP file loaded successfully!';
-                    toast.classList.remove('translate-y-full', 'opacity-0');
-                    setTimeout(() => {
-                        toast.classList.add('translate-y-full', 'opacity-0');
-                    }, 3000);
-                } else {
-                    // Show error message
-                    const toast = document.getElementById('toast');
-                    toast.querySelector('i').className = 'fas fa-exclamation-circle mr-2 text-red-500';
-                    toast.querySelector('span').textContent = 'Please upload a valid ZIP file';
-                    toast.classList.remove('translate-y-full', 'opacity-0');
-                    setTimeout(() => {
-                        toast.classList.add('translate-y-full', 'opacity-0');
-                    }, 3000);
-                }
-            }
-        });
+      document.addEventListener("dragleave", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.target === document.documentElement) {
+          dragOverlay.classList.remove("active");
+        }
+      });
+
+      document.addEventListener("drop", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragOverlay.classList.remove("active");
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          if (file.type === "application/zip" || file.name.endsWith(".zip")) {
+            const input = document.getElementById("zipFile");
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            input.files = dataTransfer.files;
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+
+            // Show success message
+            const toast = document.getElementById("toast");
+            toast.querySelector("span").textContent =
+              "ZIP file loaded successfully!";
+            toast.classList.remove("translate-y-full", "opacity-0");
+            setTimeout(() => {
+              toast.classList.add("translate-y-full", "opacity-0");
+            }, 3000);
+          } else {
+            // Show error message
+            const toast = document.getElementById("toast");
+            toast.querySelector("i").className =
+              "fas fa-exclamation-circle mr-2 text-red-500";
+            toast.querySelector("span").textContent =
+              "Please upload a valid ZIP file";
+            toast.classList.remove("translate-y-full", "opacity-0");
+            setTimeout(() => {
+              toast.classList.add("translate-y-full", "opacity-0");
+            }, 3000);
+          }
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
