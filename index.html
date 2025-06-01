@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <title>ZipTreeTool - ZIP File Explorer</title>
+    <title>ZipTree - ZIP File Explorer</title>
     
     <!-- Primary Meta Tags -->
-    <meta name="title" content="ZipTreeTool - ZIP File Explorer">
+    <meta name="title" content="ZipTree - ZIP File Explorer">
     <meta name="description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
     <meta name="keywords" content="zip explorer, file structure, zip viewer, archive explorer, file management, zip tool">
-    <meta name="author" content="ZipTreeTool">
+    <meta name="author" content="ZipTree">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content=https://ziptree.vercel.app/">
-    <meta property="og:title" content="ZipTreeTool - Professional ZIP File Explorer">
+    <meta property="og:title" content="ZipTree - Professional ZIP File Explorer">
     <meta property="og:description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
     <meta property="og:image" content=https://ziptree.vercel.app/og-image.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content=https://ziptree.vercel.app/">
-    <meta property="twitter:title" content="ZipTreeTool - Professional ZIP File Explorer">
+    <meta property="twitter:title" content="ZipTree - Professional ZIP File Explorer">
     <meta property="twitter:description" content="Explore and analyze ZIP files with our professional ZIP file explorer. View file structures, extract contents, and manage your archives efficiently.">
     <meta property="twitter:image" content=https://ziptree.vercel.app/og-image.jpg">
     
@@ -33,7 +33,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
 <link rel="shortcut icon" href="assets/images//favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/images//apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content=" ZipTreeTool" />
+<meta name="apple-mobile-web-app-title" content="ZipTree" />
 <link rel="manifest" href="/site.webmanifest" />
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -91,7 +91,7 @@
             <button class="welcome-popup-close" onclick="closeWelcomePopup()">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400">Welcome to ZipTreeTool!</h2>
+            <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400">Welcome to ZipTree!</h2>
             <div class="space-y-4">
                 <p class="text-gray-600 dark:text-gray-300">This tool helps you explore the contents of ZIP files in an interactive tree view.</p>
                 <div class="bg-gray-50 dark:bg-dark-100 p-4 rounded-lg">
@@ -117,7 +117,7 @@
             <div class="flex justify-between items-center mb-4">
                 <div class="inline-flex items-center">
                     <i class="fas fa-file-zipper text-primary-500 text-4xl md:text-5xl mr-3"></i>
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">ZipTreeTool</h1>
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">ZipTree</h1>
                 </div>
                 <button id="darkModeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
                     <i class="fas fa-moon dark:hidden text-lg"></i>
@@ -225,8 +225,10 @@
 
     <footer class="w-full mt-8 p-6 text-center text-sm md:text-base text-gray-500 dark:text-gray-300 bg-white dark:bg-dark-200 border-t border-gray-200 dark:border-dark-400">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; <span id="year"></span> ZipTreeTool All rights reserved.</p>
-           
+            <p>&copy; <span id="year"></span> ZipTree All rights reserved.</p>
+            <a href="https://www.producthunt.com/products/ziptreetool?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ziptreetool" target="_blank">
+                <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=972287&theme=light&t=1748761381607" alt="ZipTreeTool - Zip file explorer tool | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+            </a>
         </div>
     </footer>
 
@@ -238,8 +240,82 @@
         </div>
     </div>
 
-   
-
+    <style>
+        .drag-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(14, 165, 233, 0.1);
+            border: 4px dashed #0ea5e9;
+            z-index: 9999;
+            display: none;
+            pointer-events: none;
+        }
+        .drag-over.active {
+            display: block;
+        }
+    </style>
+    <div class="drag-over" id="dragOverlay"></div>
     <script src="assets/js/script.js" defer></script>
+    <script>
+        // Add drag and drop functionality to the entire document
+        const dragOverlay = document.getElementById('dragOverlay');
+        
+        document.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dragOverlay.classList.add('active');
+        });
+
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        document.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.target === document.documentElement) {
+                dragOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dragOverlay.classList.remove('active');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === 'application/zip' || file.name.endsWith('.zip')) {
+                    const input = document.getElementById('zipFile');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    input.files = dataTransfer.files;
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                    
+                    // Show success message
+                    const toast = document.getElementById('toast');
+                    toast.querySelector('span').textContent = 'ZIP file loaded successfully!';
+                    toast.classList.remove('translate-y-full', 'opacity-0');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-full', 'opacity-0');
+                    }, 3000);
+                } else {
+                    // Show error message
+                    const toast = document.getElementById('toast');
+                    toast.querySelector('i').className = 'fas fa-exclamation-circle mr-2 text-red-500';
+                    toast.querySelector('span').textContent = 'Please upload a valid ZIP file';
+                    toast.classList.remove('translate-y-full', 'opacity-0');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-full', 'opacity-0');
+                    }, 3000);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

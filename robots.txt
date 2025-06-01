@@ -1,4 +1,3 @@
 User-agent: *
 Crawl-delay: 10
-
 Sitemap:https://ziptree.vercel.app/sitemap.xml
