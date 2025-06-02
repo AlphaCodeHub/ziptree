@@ -891,14 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem("zipTreeToolPopupShown", "true");
 }
 
-        window.addEventListener("DOMContentLoaded", function () {
-            const alreadyShown = localStorage.getItem("zipTreeToolPopupShown");
-            if (!alreadyShown) {
-                const popup = document.getElementById("welcomePopup");
-                popup.style.display = "flex";
-                popup.classList.add('active');
-            }
-        });
+        
 
         // Make sure function is global (optional if script is inline)
       window.closeWelcomePopup = closeWelcomePopup;
